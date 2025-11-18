@@ -74,7 +74,7 @@ class Main extends Controller
     }
 
     public function tags() {
-        
+        $tags = DB::SELECT("SELECT * FROM tags ORDER BY id");
 
 
 
@@ -86,7 +86,7 @@ class Main extends Controller
 
 
 
-        return view('tags');
+        return view('tags', ['tags' => $tags]);
     }
 
     public function tag($id) {
