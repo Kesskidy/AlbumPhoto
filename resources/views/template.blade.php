@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Album photo</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="./resources/style.css">
 </head>
 <body>
     <div class="nav">
