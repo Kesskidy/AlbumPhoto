@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Album photo</title>
-    <link rel="stylesheet" type="text/css" href="./resources/style.css">
-</head>
-<body>
-    <div class="nav">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Album Photo - Accueil</title>
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    </head>
+    
+    <body>
+        <header>Album Photo</header>
         <nav>
             <a href="/">Accueil</a>
-            <a href="/">Albums</a>
-            <a href="/">Photos</a>
-            <a href="/">Login</a>
-            <a href="/">Register</a>
+            <a href="/albums">Albums</a>
+            <a href="/photos">Photos</a>
+            <a href="/tags">Tags</a>
+            <a href="/ajoutPhoto">Ajout Photo</a>
         </nav>
-    </div>
-
-    <main>
-        <div>
+        
+        
+        <main>
             @yield("contenu")
-        </div>
-    </main>
-</body>
-
+        </main>
+    </body>
+</html>
