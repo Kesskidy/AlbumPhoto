@@ -55,7 +55,8 @@ class Main extends Controller
     }
 
     public function LesPhotos() {
-        
+        $photos = DB::SELECT("SELECT * FROM photos ORDER BY id");
+        $albums = DB::SELECT("SELECT * FROM albums");
 
 
 
@@ -65,9 +66,7 @@ class Main extends Controller
 
 
 
-
-
-        return view('photos');
+        return view('photos', ['photos' => $photos, 'albums' => $albums]);
     }
 
     public function lesTags() {
