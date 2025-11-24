@@ -25,7 +25,7 @@ class Main extends Controller
         return view('index');
     }
 
-    public function albums() {
+    public function LesAlbums() {
         
 
 
@@ -41,7 +41,7 @@ class Main extends Controller
         return view('albums');
     }
 
-    public function album($id) {
+    public function detailAlbum($id) {
         
 
 
@@ -57,7 +57,7 @@ class Main extends Controller
         return view('album');
     }
 
-    public function photos() {
+    public function LesPhotos() {
         
 
 
@@ -89,10 +89,12 @@ class Main extends Controller
         return view('tags', ['tags' => $tags]);
     }
 
-    public function tag($id) {
-        $tag = DB::SELECT("SELECT id FROM tags
-                           LEFT JOIN tag_id ON 
-        ")
+    public function detailTag($id) {
+        $tag = DB::select("SELECT tags.id, tags.nom, photos.id AS photo_id, photos.titre
+                            FROM tags
+                            LEFT JOIN possede_tag ON tags.id = possede_tag.tag_id
+                            LEFT JOIN photos ON possede_tag.photo_id = photos.id
+                            WHERE tags.id = 1");
 
 
 
@@ -101,8 +103,7 @@ class Main extends Controller
 
 
 
-
-        return view('tag');
+        return view('tag', ['tag' => $tag]);
     }
 
     public function ajoutPhoto() {
