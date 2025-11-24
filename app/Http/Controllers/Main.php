@@ -93,7 +93,7 @@ class Main extends Controller
     public function detailTag($id) {
     // On récupère le tag avec ses photos liées
     $tag = Tag::with('photos')->find($id);
-
+    
     return view('tag', ['tag' => $tag]);
     }
 
