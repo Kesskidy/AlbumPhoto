@@ -54,16 +54,31 @@ class Main extends Controller
         return view('album', ['album' => $album]);
     }
 
-    public function LesPhotos() {
-        $photos = Photo::all();
+    public function LesPhotos(Request $request) {
+        // Construire la requête photo avec filtres Eloquent
+        $query = Photo::query();
 
+        if ($request->filled('tag_id')) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->where('tags.id', $request->input('tag_id'));
+            });
+        }
 
+        if ($request->filled('note')) {
+            $query->where('note', $request->input('note'));
+        }
 
+        $photos = $query->get();
 
+        // Tags et notes pour les selects (Eloquent)
+        $tags = Tag::orderBy('nom')->get();
+        $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
 
-
-
-        return view('photos', ['photos' => $photos]);
+        return view('photos', [
+            'photos' => $photos,
+            'tags' => $tags,
+            'notes' => $notes,
+        ]);
     }
 
     public function lesTags() {
