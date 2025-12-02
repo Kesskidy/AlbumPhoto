@@ -5,6 +5,8 @@
 
     <div class="filtres">
         <form method="GET" action="/album/{{ $album->id }}">
+            <input type="search" name="search" placeholder="Recherche titre..." value="{{ request('search') }}">
+
             <label for="tags">Filtrer par tags :</label>
             <select name="tag_id" id="tags">
                 <option value="">Sélectionnez un tag</option>

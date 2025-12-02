@@ -45,20 +45,32 @@ class Main extends Controller
     public function detailAlbum($id, Request $request)
     {
         $album = Album::findOrFail($id);
+
+        // Début
         $query = Photo::where('album_id', $id);
 
+        // selection par tags
         if ($request->filled('tag_id')) {
             $query->whereHas('tags', function ($q) use ($request) {
                 $q->where('tags.id', $request->input('tag_id'));
             });
         }
 
+        // selection par notes
         if ($request->filled('note')) {
             $query->where('note', $request->input('note'));
         }
 
+        // selection par recherche
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('titre', 'LIKE', "%{$search}%");
+        }
+
+        // fin 
         $photos = $query->get();
 
+        // pour afficher dans le form
         $tags = Tag::orderBy('nom')->get();
         $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
 
@@ -74,22 +86,31 @@ class Main extends Controller
 
     public function LesPhotos(Request $request)
     {
-        // Construire la requête photo avec filtres Eloquent
+        // Début
         $query = Photo::query();
-
+        
+        // selection par tags
         if ($request->filled('tag_id')) {
             $query->whereHas('tags', function ($q) use ($request) {
                 $q->where('tags.id', $request->input('tag_id'));
             });
         }
 
+        // selection par notes
         if ($request->filled('note')) {
             $query->where('note', $request->input('note'));
         }
 
+        // selection par recherche
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('titre', 'LIKE', "%{$search}%");
+        }
+
+        // fin 
         $photos = $query->get();
 
-        // Tags et notes pour les selects (Eloquent)
+        // pour afficher dans le form
         $tags = Tag::orderBy('nom')->get();
         $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
 
