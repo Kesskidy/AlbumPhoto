@@ -12,7 +12,8 @@ use function Laravel\Prompts\alert;
 class Main extends Controller
 {
 
-    public function index() {
+    public function index()
+    {
 
 
 
@@ -28,9 +29,9 @@ class Main extends Controller
         return view('index');
     }
 
-    public function LesAlbums() {
+    public function LesAlbums()
+    {
         $lesAlbums = Album::all();
-
 
 
 
@@ -41,29 +42,96 @@ class Main extends Controller
         return view('albums', ['lesAlbums' => $lesAlbums]);
     }
 
-    public function detailAlbum($id) {
+    public function detailAlbum($id, Request $request)
+    {
         $album = Album::findOrFail($id);
 
+        // Début
+        $query = Photo::where('album_id', $id);
+
+        // selection par tags
+        if ($request->filled('tag_id')) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->where('tags.id', $request->input('tag_id'));
+            });
+        }
+
+        // selection par notes
+        if ($request->filled('note')) {
+            $query->where('note', $request->input('note'));
+        }
+
+        // selection par recherche
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('titre', 'LIKE', "%{$search}%");
+        }
+
+        // fin 
+        $photos = $query->get();
+
+        // pour afficher dans le form
+        $tags = Tag::orderBy('nom')->get();
+        $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
 
 
 
-
-
-
-
-        return view('album', ['album' => $album]);
+        return view('album', [
+            'album' => $album,
+            'photos' => $photos,
+            'tags' => $tags,
+            'notes' => $notes,
+        ]);
     }
 
+<<<<<<< HEAD
     public function lesPhotos() {
         $photos = Photo::all();
+=======
+    public function LesPhotos(Request $request)
+    {
+        // Début
+        $query = Photo::query();
+        
+        // selection par tags
+        if ($request->filled('tag_id')) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->where('tags.id', $request->input('tag_id'));
+            });
+        }
+>>>>>>> 66a3ba93347244407532d63ad3a27b7827fd845f
 
+        // selection par notes
+        if ($request->filled('note')) {
+            $query->where('note', $request->input('note'));
+        }
 
+        // selection par recherche
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('titre', 'LIKE', "%{$search}%");
+        }
 
+        // fin 
+        $photos = $query->get();
 
+<<<<<<< HEAD
         return view('photos', ['photos' => $photos]);
+=======
+        // pour afficher dans le form
+        $tags = Tag::orderBy('nom')->get();
+        $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
+
+        return view('photos', [
+            'photos' => $photos,
+            'tags' => $tags,
+            'notes' => $notes,
+        ]);
+>>>>>>> 66a3ba93347244407532d63ad3a27b7827fd845f
     }
 
-    public function lesTags() {
+    public function lesTags()
+    {
         $tags = DB::SELECT("SELECT * FROM tags ORDER BY id");
 
 
@@ -79,8 +147,9 @@ class Main extends Controller
         return view('tags', ['tags' => $tags]);
     }
 
-    
-    public function detailTag($id) {
+
+    public function detailTag($id)
+    {
         $tag = Tag::with('photos')->find($id);
 
         return view('tag', ['tag' => $tag]);
@@ -88,8 +157,9 @@ class Main extends Controller
 
 
 
-    public function ajoutPhoto() {
-        
+    public function ajoutPhoto()
+    {
+
 
 
 
@@ -103,6 +173,7 @@ class Main extends Controller
 
         return view('ajoutPhoto');
     }
+<<<<<<< HEAD
     public function traitementFormulaire(Request $request) {
     // --- 1. Validation des données ---
     $request->validate([
@@ -112,6 +183,16 @@ class Main extends Controller
         'album_id' => 'required|integer|exists:albums,id',
         'image'    => 'required|image|max:2048', // Validation pour le fichier uploadé
     ]);
+=======
+    public function traitementFormulaire(Request $request)
+    {
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'url' => 'required|url',
+            'note' => 'required|integer|min:1|max:5',
+            'album_id' => 'required|integer|exists:albums,id',
+        ]);
+>>>>>>> 66a3ba93347244407532d63ad3a27b7827fd845f
 
     // --- 2. Traitement du fichier image ---
     
@@ -143,10 +224,13 @@ class Main extends Controller
 
     return redirect('/photos')->with('success', 'Photo ajoutée avec succès !');
     }
+<<<<<<< HEAD
 
     public function monCompte()
     {
         return view('compte');
     }
+=======
+>>>>>>> 66a3ba93347244407532d63ad3a27b7827fd845f
 }
 ?>
