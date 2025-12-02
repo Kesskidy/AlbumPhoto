@@ -9,8 +9,10 @@
     <label for="url">URL de la photo :</label>
     <input type="text" id="url" name="url" placeholder="http://example.com (optionnel si image uploadée)"><br><br>
 
-    <label for="image">Photo :</label>
-    <input value="{{ old('image') }}" placeholder="Image" type="file" id="image" name="image" required><br><br>
+    <label for="image" class="file-upload">
+        <span>Charger une image</span>
+        <input type="file" id="image" name="image" accept="image/png, image/jpeg" required class="hidden-input">
+    </label>
 
     <label for="note">Note de la photo (1-5) :</label>
     <input type="number" id="note" name="note" min="1" max="5" required><br><br>

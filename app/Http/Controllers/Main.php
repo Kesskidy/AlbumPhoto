@@ -54,11 +54,8 @@ class Main extends Controller
         return view('album', ['album' => $album]);
     }
 
-    public function LesPhotos() {
+    public function lesPhotos() {
         $photos = Photo::all();
-
-
-
 
 
 
@@ -106,47 +103,50 @@ class Main extends Controller
 
         return view('ajoutPhoto');
     }
-    public function traitementFormulaire(Request $request){
-        // 1. Validation des données, y compris l'image
-        $request->validate([
-            'titre' => 'required|string|max:255',
-            'url' => 'required|url',
-            'note' => 'required|integer|min:1|max:5',
-            'album_id' => 'required|integer|exists:albums,id',
-            // 'image' est validé comme un fichier image, maximum 2048 KB (2 MB)
-            'image' => 'required|image|max:2048', 
-        ]);
+    public function traitementFormulaire(Request $request) {
+    // --- 1. Validation des données ---
+    $request->validate([
+        'titre'    => 'required|string|max:255',
+        'url'      => 'required|url', // On garde la validation pour 'url'
+        'note'     => 'required|integer|min:1|max:5',
+        'album_id' => 'required|integer|exists:albums,id',
+        'image'    => 'required|image|max:2048', // Validation pour le fichier uploadé
+    ]);
 
-        // 2. Traitement du fichier image
+    // --- 2. Traitement du fichier image ---
     
-        // Récupère l'objet UploadedFile pour le champ 'image'
-        $imageFile = $request->file('image');
+    $imageFile = $request->file('image');
 
-        // Stocke le fichier dans le dossier 'photos' sur le disque 'public' 
-        // et retourne le chemin relatif du fichier stocké (ex: 'photos/nom_unique.jpg').
-        // Assurez-vous d'avoir lancé 'php artisan storage:link'
-        $imagePath = $imageFile->store('photos', 'public');
+    // a. Définition du chemin de destination
+    // public_path('photos') pointe vers C:\laravel\AlbumPhoto\public\photos
+    $destinationPath = public_path('photos');
+    
+    // b. Génération d'un nom de fichier unique pour éviter les conflits
+    $imageFileName = time() . '_' . $imageFile->getClientOriginalName();
+    
+    // c. Déplacement du fichier uploadé vers le dossier public/photos
+    // C'est l'équivalent de l'action 'store' mais en direct dans le dossier public.
+    $imageFile->move($destinationPath, $imageFileName);
 
-        // 3. Insertion dans la base de données (MySQL)
+    // d. Définition du chemin d'accès à enregistrer dans la BDD (relatif au dossier public)
+    // Utiliser '/photos/' pour accéder directement au dossier public/photos
+    $imagePath = '/photos/' . $imageFileName; 
+    
+    // --- 3. Insertion dans la base de données (MySQL) ---
+    
+    DB::table('photos')->insert([
+        'titre'    => $request->input('titre'),
+        'url'      => $imagePath, 
+        'note'     => $request->input('note'),
+        'album_id' => $request->input('album_id'),
+    ]);
 
-        DB::table('photos')->insert([
-            'titre' => $request->input('titre'),
-            'url' => $request->input('url'),
-            'note' => $request->input('note'),
-            'album_id' => $request->input('album_id'),
-        
-            // CORRECTION MAJEURE: On insère le chemin d'accès ('imagePath'), pas l'objet Request
-            'image' => $imagePath, 
-        
-            // Optionnel : ajouter le nom original du fichier
-            // 'nom_original' => $imageFile->getClientOriginalName(), 
-        
-            // Laravel gère souvent les timestamps :
-            'created_at' => now(), 
-            'updated_at' => now(),
-        ]);
-
-        return redirect('/photos')->with('success', 'Photo ajoutée avec succès !');
+    return redirect('/photos')->with('success', 'Photo ajoutée avec succès !');
     }
-}  
+
+    public function monCompte()
+    {
+        return view('compte');
+    }
+}
 ?>
