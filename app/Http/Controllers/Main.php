@@ -29,7 +29,7 @@ class Main extends Controller
 
     public function lesAlbums()
     {
-        $lesAlbums = Album::all();
+        $lesAlbums = Album::with('photos')->get();
 
         
 

@@ -12,9 +12,15 @@
                         <h3>{{ $album->titre }}</h3>
                         <p>Propriété : {{ $album->user->name ?? 'Inconnu' }}</p>
                         
-                        {{-- L'image n'a plus besoin d'être dans un lien séparé --}}
-                        <img src="{{ $album->couverture_url ?? asset('images/default_album.jpg') }}" 
+                        @php
+                            $firstPhoto = $album->photos->first();
+                            $imageUrl = $firstPhoto ? $firstPhoto->url : asset('images/default_album.jpg');
+                        @endphp
+                        <div>
+                            <img src="{{ $imageUrl }}" 
                              alt="Couverture de l'album {{ $album->titre }}">
+                        </div>
+                        
                     </div>
                 </a>
             @endforeach

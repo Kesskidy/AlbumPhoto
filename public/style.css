@@ -125,9 +125,10 @@ nav{
 .photo-album-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    margin: 20px 0;
+    margin: 20px;
     padding: 10px;
     background-color: #2c2c2c;
+    border: 10px solid #1a1a1a;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     gap: 10px;
     position: relative;
@@ -137,12 +138,14 @@ nav{
 /* Pseudo-élément pour la RELIURE CENTRALE */
 .photo-album-grid::before {
     content: '';
-    grid-column: 4; 
-    grid-row: 1 / -1; 
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-50%);
     width: 5px;
     background-color: #1a1a1a;
     z-index: 10;
-    transform: translateX(-50%);
     border-radius: 2px;
 }
 
@@ -154,7 +157,7 @@ nav{
 }
 .photo-slot {
     background-color: #4b4b4b; 
-    padding: 5px; 
+    padding: 15px; 
     border-radius: 2px;
     color: white; 
     display: grid;
@@ -165,15 +168,20 @@ nav{
         "album";
     align-items: center;
     text-align: center;
+    gap: 10px;
 }
 .photo-slot img { 
     grid-area: img;
     display: block;
     width: 100%;
     height: auto;
-    padding: 0 5px; 
     
     aspect-ratio: 46/61;
     object-fit: cover;
     box-sizing: border-box;
+    border-radius: 2px;
+    filter: blur(3px);
+}
+.photo-slot div {
+    overflow: hidden;
 }
