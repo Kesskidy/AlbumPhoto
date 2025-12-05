@@ -202,52 +202,5 @@ class Main extends Controller
         
         return redirect('/photos')->with('success', 'Photo ajoutée avec succès !');
     }
-<<<<<<< HEAD
-    public function create_Personne(){
-        return view("createPersonne");
-    }
-    public function create_Album(){
-        return view("createAlbum");
-    }
-    public function store_album(){}
-=======
-
-
-    public function creerAlbum()
-    {
-        return view('creerAlbum');
-    }
-
-    public function storeAlbum(Request $request)
-    {
-        $request->validate([
-            'titre' => 'required|string|max:255',
-        ]);
-
-        Album::create([
-            'titre' => $request->input('titre'),
-            'creation' => date('Y-m-d'),
-            'user_id' => Auth::id(),
-        ]);
-
-        return redirect('/albums')->with('success', 'Album créé avec succès !');
-    }
-<<<<<<< HEAD
->>>>>>> afe362a2355b413164e2361b110f9472c786e74c
-=======
-
-
-    public function deletePhoto($id)
-    {
-        $photo = Photo::findOrFail($id);
-
-        if (Auth::check() && $photo->user_id === Auth::id()) {
-            $photo->delete();
-            return redirect()->back()->with('success', 'Photo supprimée avec succès !');
-        }
-
-        return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à supprimer cette photo.');
-    }
->>>>>>> 5fca19dfaec0551f16957e08d4dd0bb68bc641f3
 }
 ?>
