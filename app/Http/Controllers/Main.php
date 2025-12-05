@@ -199,19 +199,7 @@ class Main extends Controller
             'album_id' => $request->input('album_id'),
             'user_id' => Auth::id(),
         ]);
-<<<<<<< HEAD
         
-=======
-
-        // Lier le tag sélectionné / créé (si présent)
-        if ($selectedTagId) {
-            DB::table('possede_tag')->insert([
-                'photo_id' => $photoId,
-                'tag_id' => $selectedTagId,
-            ]);
-        }
-
->>>>>>> 5fca19dfaec0551f16957e08d4dd0bb68bc641f3
         return redirect('/photos')->with('success', 'Photo ajoutée avec succès !');
     }
 <<<<<<< HEAD

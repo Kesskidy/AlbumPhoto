@@ -1,14 +1,8 @@
 @extends('template')
-<<<<<<< HEAD
-
-=======
-//photos(id,titre, url, note, album_id, user_id)
->>>>>>> 5fca19dfaec0551f16957e08d4dd0bb68bc641f3
 @section('content')
 <form method="POST" action="/traitementFormulaire" enctype="multipart/form-data">
     @csrf
 
-<<<<<<< HEAD
     <label for="url">URL de la photo :</label>
     <input type="text" id="url" name="url" placeholder="http://example.com (optionnel si image uploadée)"><br><br>
 
@@ -16,12 +10,6 @@
         <span>Charger une image</span>
         <input type="file" id="image" name="image" accept="image/png, image/jpeg" required class="hidden-input">
     </label>
-=======
-    <label for="titre">Titre de la photo :</label><br>
-    <input type="text" id="titre" name="titre" value="{{ old('titre') }}" required><br />
-    @error('titre') <div style="color:red">{{ $message }}</div> @enderror
-    <br />
->>>>>>> 5fca19dfaec0551f16957e08d4dd0bb68bc641f3
 
     <label for="photo">Fichier image :</label><br>
     <input type="file" id="photo" name="photo" accept="image/*" required><br />

@@ -16,17 +16,7 @@
             <a href="/albums">Albums</a>
             <a href="/photos">Photos</a>
             <a href="/tags">Tags</a>
-<<<<<<< HEAD
             <a href="/ajoutPhoto">Ajout Photo</a>
-=======
-
-            @auth
-                <a href="/creerAlbum">Créer Album</a>
-                <a href="/ajoutPhoto">Ajout Photo</a>
-            @endauth
-
-            <a href="/tag">Tag</a>
->>>>>>> afe362a2355b413164e2361b110f9472c786e74c
 
             @auth
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
