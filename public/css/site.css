@@ -1,3 +1,4 @@
+/*accueil */
 .hero {
     text-align: center;
     padding: var(--spacing-2xl) 0;
@@ -20,6 +21,7 @@
     max-width: 600px;
     margin: 0 auto var(--spacing-lg);
 }
+
 
 .actions {
     display: flex;
@@ -306,99 +308,6 @@
     font-size: 0.9rem;
     color: var(--color-text-light);
 }
-
-/* les tags ### on va enlever la page tags -> déjà filtres dans photos ### */
-
-.tags-list {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: var(--spacing-md);
-}
-
-.tags-list li {
-    margin: 0;
-}
-
-.tag-item {
-    display: block;
-    background-color: var(--color-bg-alt);
-    padding: var(--spacing-md) var(--spacing-lg);
-    border-radius: var(--radius-lg);
-    text-align: center;
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-base);
-    border: 2px solid var(--color-border-light);
-    color: var(--color-text);
-    font-weight: 500;
-}
-
-.tag-item:hover {
-    background-color: var(--color-primary);
-    color: white;
-    border-color: var(--color-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-/* détail tag -> là aussi */
-
-.tag-header {
-    text-align: center;
-    margin-bottom: var(--spacing-xl);
-}
-
-.tag-header h2 {
-    color: var(--color-primary);
-}
-
-.tag-photos {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: var(--spacing-lg);
-}
-
-.tag-photos li {
-    margin: 0;
-    background-color: var(--color-bg-alt);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-base);
-}
-
-.tag-photos li:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-}
-
-.tag-photos img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-}
-
-.tag-photos p {
-    padding: var(--spacing-md);
-    margin: 0;
-    font-weight: 500;
-    color: var(--color-text);
-}
-
-.empty-state {
-    text-align: center;
-    padding: var(--spacing-2xl);
-    color: var(--color-text-light);
-}
-
-.empty-state p {
-    font-size: 1.125rem;
-}
-
 
 /* les fomulaires */
 
