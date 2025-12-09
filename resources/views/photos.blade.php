@@ -48,4 +48,5 @@
             </div>
         @endforeach
     </div>
+    <script src="{{ asset('zoom-photo.js') }}" defer></script>
 @endsection

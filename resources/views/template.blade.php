@@ -40,7 +40,6 @@
                 <a href="{{ route('register') }}">Inscription</a>
             @endguest
         </nav>
-        <script src="{{ asset('script.js') }}" defer></script>
     </div>
 
 
