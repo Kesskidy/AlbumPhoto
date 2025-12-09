@@ -23,13 +23,6 @@ Route::get('/tag/{id}', [Main::class, 'detailTag'])->where("id", "[0-9]+"); //pa
 Route::get('/ajoutPhoto', [Main::class, 'ajoutPhoto'])->middleware('auth'); //formulaire d'ajout de photo (spé web)
 Route::post('/traitementFormulaire', [Main::class, 'traitementFormulaire'])->middleware('auth'); //traitement du formulaire d'ajout de photo (spé web)
 Route::get('/compte', [Main::class, 'monCompte']); //page de gestion du compte utilisateur (spé web)
-
-Route::get('/creerAlbum', [Main::class, 'creerAlbum'])->middleware('auth');
-Route::post('/storeAlbum', [Main::class, 'storeAlbum'])->middleware('auth');
-
-Route::post('/deletePhoto/{id}', [Main::class, 'deletePhoto'])->where("id", "[0-9]+")->middleware('auth');
-
-//Bonus :
-//créer des commentaires sur les photos
-//créer des comptes et suivres d'autres utilisateurs et leurs albums publics
-//liké des photos et ils apparaissent dans une page "mes favoris"
+Route::get('/creerAlbum', [Main::class, 'creerAlbum'])->middleware('auth'); //formulaire de création d'album
+Route::post('/storeAlbum', [Main::class, 'storeAlbum'])->middleware('auth'); //traitement du formulaire de création d'album
+Route::post('/deletePhoto/{id}', [Main::class, 'deletePhoto'])->where("id", "[0-9]+")->middleware('auth'); //suppression d'une photo (spé web)
