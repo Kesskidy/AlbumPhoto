@@ -6,13 +6,15 @@
         <form method="POST" action="/traitementFormulaire" enctype="multipart/form-data" id="add-photo-form">
             @csrf
 
-    <label for="url">URL de la photo :</label>
-    <input type="text" id="url" name="url" placeholder="http://example.com (optionnel si image uploadée)"><br><br>
+            <div class="form-group">
+                <label for="titre">Titre de la photo :</label>
+                <input type="text" id="titre" name="titre" value="{{ old('titre') }}" required>
+            </div>
 
-    <label for="image" class="file-upload">
-        <span>Charger une image</span>
-        <input type="file" id="image" name="image" accept="image/png, image/jpeg" required class="hidden-input">
-    </label>
+            <div class="form-group">
+                <label for="photo">Fichier image :</label>
+                <input type="file" id="photo" name="photo" accept="image/*" required>
+            </div>
 
             <div class="form-group">
                 <label for="note">Note de la photo (1-5) :</label>
@@ -44,34 +46,10 @@
                 <input type="text" id="new_tag" name="new_tag" value="{{ old('new_tag') }}" placeholder="ex: vacances">
             </div>
 
-
-
-    <label for="album_id">Album :</label><br>
-    <select id="album_id" name="album_id" required>
-        <option value="">Sélectionnez un album</option>
-        @foreach($albums as $album)
-            <option value="{{ $album->id }}" @selected(old('album_id') == $album->id)>{{ $album->titre }}</option>
-        @endforeach
-    </select>
-
-
-
-    <label for="tag_id">Tag existant (optionnel) :</label><br>
-    <select id="tag_id" name="tag_id">
-        <option value="">Aucun</option>
-        @foreach($tags as $tag)
-            <option value="{{ $tag->id }}" @selected(old('tag_id') == $tag->id)>{{ $tag->nom }}</option>
-        @endforeach
-    </select>
-
-
-
-    <label for="new_tag">Ou ajouter un nouveau tag (minuscule, sans espace, sans accents ni caractères spéciaux) :</label><br>
-    <input type="text" id="new_tag" name="new_tag" value="{{ old('new_tag') }}" placeholder="ex: vacances" />
-
-
-
-
-    <input type="submit" value="Ajouter la photo">
-</form>
+            <div class="form-actions">
+                <input type="submit" value="Ajouter la photo" class="btn btn-primary">
+                <a href="/" class="btn">Annuler</a>
+            </div>
+        </form>
+    </div>
 @endsection
