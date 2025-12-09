@@ -16,7 +16,7 @@ class Main extends Controller
 
     public function index()
     {
-
+        // on va ajouter après des fonctionnalités
 
 
 
@@ -34,7 +34,7 @@ class Main extends Controller
         
 
 
-
+        //affiche les albums
         return view('albums', ['lesAlbums' => $lesAlbums]);
     }
 
@@ -42,7 +42,7 @@ class Main extends Controller
     {
         $album = Album::findOrFail($id);
 
-        // Début
+        // Début (Filtres)
         $query = Photo::where('album_id', $id);
 
         // selection par tags
@@ -63,15 +63,15 @@ class Main extends Controller
             $query->where('titre', 'LIKE', "%{$search}%");
         }
 
-        // fin 
+        // fin (Filtres)
         $photos = $query->get();
 
-        // pour afficher dans le form
+        // pour afficher dans le form des Filtres
         $tags = Tag::orderBy('nom')->get();
         $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
 
 
-
+        //afficher les photos d'un Album + Filtres
         return view('album', [
             'album' => $album,
             'photos' => $photos,
@@ -82,7 +82,7 @@ class Main extends Controller
 
     public function lesPhotos(Request $request)
     {
-        // Début
+        // Début (Filtres)
         $query = Photo::query();
 
         // selection par tags
@@ -103,13 +103,14 @@ class Main extends Controller
             $query->where('titre', 'LIKE', "%{$search}%");
         }
 
-        // fin 
+        // fin (Filtres)
         $photos = $query->get();
 
-        // pour afficher dans le form
+        // pour afficher dans le form des Filtres
         $tags = Tag::orderBy('nom')->get();
         $notes = Photo::select('note')->distinct()->orderBy('note')->pluck('note');
 
+        //afficher les photos + form filtres
         return view('photos', [
             'photos' => $photos,
             'tags' => $tags,
@@ -130,7 +131,7 @@ class Main extends Controller
 
 
 
-
+        // on va suppr
         return view('tags', ['tags' => $tags]);
     }
 
@@ -138,17 +139,17 @@ class Main extends Controller
     public function detailTag($id)
     {
         $tag = Tag::with('photos')->find($id);
-
+        // on va suppr
         return view('tag', ['tag' => $tag]);
     }
 
 
     public function ajoutPhoto()
     {
-        // ...existing code...
+        //vient chercher les tags et albums
         $albums = Album::orderBy('titre')->get();
         $tags = Tag::orderBy('nom')->get();
-
+        //return les tags et albums dans le form
         return view('ajoutPhoto', [
             'albums' => $albums,
             'tags' => $tags,
@@ -158,20 +159,21 @@ class Main extends Controller
 
     public function traitementFormulaire(Request $request)
     {
+
         $request->validate([
             'titre' => 'required|string|max:255',
-            'photo' => 'required|image|max:5120', // max 5MB
+            'photo' => 'required|image|max:5120',
             'note' => 'required|integer|min:1|max:5',
             'album_id' => 'required|integer|exists:albums,id',
             'tag_id' => 'nullable|integer|exists:tags,id',
             'new_tag' => 'nullable|string|max:50',
         ]);
 
-        // Stocker le fichier sur le disque 'public'
+        // Stock l'image dans le public
         $path = $request->file('photo')->store('photos', 'public');
         $url = Storage::url($path);
 
-        // Déterminer le tag à associer : priorité à new_tag s'il est renseigné
+        // eeee
         $selectedTagId = null;
 
         if ($request->filled('new_tag')) {
